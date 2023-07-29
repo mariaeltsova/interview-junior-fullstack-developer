@@ -1,0 +1,29 @@
+
+<form>
+  <div class="form-group">
+    <label for="city">Enter the city's name or its uuid:</label>
+    <input type="text" class="form-control" id="city" name="city" placeholder="City to be found" [(ngModel)]="enteredSearch" (ngModelChange)="Submit()">
+    <button type="submit" class="btn btn-primary" (click)="Submit()">Search</button>
+  </div>
+</form>
+
+<h2>Found these cities:</h2>
+
+<table class="table">
+  <thead>
+    <tr >
+      <th scope="col">City name</th>
+      <th scope="col">Count</th>
+      <th scope="col">Uuid</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let city of cities">
+      <td>{{city.cityName}}</td>
+      <td>{{city.count}}</td>
+      <td>{{city.uuid}}</td>
+    </tr>
+  </tbody>
+</table>
+
+
