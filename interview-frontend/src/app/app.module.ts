@@ -8,6 +8,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgxPaginationModule } from 'ngx-pagination';
+
 @NgModule({
   declarations: [AppComponent, FormComponent],
   imports: [
@@ -17,6 +19,7 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
     HttpClientModule,
     NgbModule,
     NgbModalModule,
+    NgxPaginationModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

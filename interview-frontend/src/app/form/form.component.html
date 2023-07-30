@@ -1,15 +1,22 @@
 
-<form>
+<div class="d-flex justify-content-center">
+<form style="margin-bottom: 40px;">
   <div class="form-group">
-    <label for="city">Enter the city's name or its uuid:</label>
+    <label for="city" style="margin-bottom: 5px; font-size: larger;">Start entering the city's name or its uuid:</label>
     <input type="text" class="form-control" id="city" name="city" placeholder="City to be found" [(ngModel)]="enteredSearch" (ngModelChange)="Submit()">
-    <button type="submit" class="btn btn-primary" (click)="Submit()">Search</button>
   </div>
 </form>
+</div>
 
-<h2>Found these cities:</h2>
-
-<table class="table">
+<div class="d-flex justify-content-center" style="margin-bottom: 10px;" >
+  <pagination-controls
+    previousLabel="Prev"
+    nextLabel="Next"
+    (pageChange)="onPageChange($event)"
+  >
+  </pagination-controls>
+</div>
+<table class="table" >
   <thead>
     <tr >
       <th scope="col">City name</th>
@@ -18,12 +25,19 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let city of cities">
+    <tr *ngFor="let city of cities | paginate
+    : {
+        itemsPerPage: tableSize,
+        currentPage: page,
+        totalItems: count
+      };
+let i = index">
       <td>{{city.cityName}}</td>
       <td>{{city.count}}</td>
       <td>{{city.uuid}}</td>
     </tr>
   </tbody>
 </table>
+
 
 
