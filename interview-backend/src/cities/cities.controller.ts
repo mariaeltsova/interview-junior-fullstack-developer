@@ -29,7 +29,7 @@ export class CitiesController {
   @Get('paginated')
   public findAllPaginated(
     @Query('page') page: number = 1,
-    @Query('pageSize') pageSize: number = 10,
+    @Query('pageSize') pageSize: number = 5,
   ): PaginationResponseDto<CitiesModel> {
     return this.citiesService.findAllPaginated(page, pageSize);
   }

@@ -71,7 +71,7 @@ export class CitiesService {
     );
     const startIndex = (page - 1) * pageSize;
     const paginatedData = matchingCities.slice(startIndex, startIndex + pageSize);
-    const totalItems = this.cities.length;
+    const totalItems = matchingCities.length;
     return {
         items: paginatedData,
         totalItems,
