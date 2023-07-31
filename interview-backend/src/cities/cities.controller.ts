@@ -1,16 +1,11 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { CitiesService } from './cities.service';
 import { CitiesModel } from './cities.interface';
-import { PaginationResponseDto } from 'src/pagination/pagination-response.dto';
-
+import { PaginationResponseDto } from '../pagination/pagination-response.dto';
+import {BadRequestException} from '@nestjs/common';
 @Controller('cities')
 export class CitiesController {
   constructor(private readonly citiesService: CitiesService) {}
-  @Get('uuid/')
-  public findByUuid(@Query('uuid') uuid: string): CitiesModel {
-    console.log('findByUuid');
-    return this.citiesService.findOne(uuid);
-  }
 
   @Get('search/')
   public findBySearchString(
@@ -36,11 +31,20 @@ export class CitiesController {
 
   @Get('search/paginated/')
   public findBySearchStringPaginated(
-    @Query('page') page: number = 1,
-    @Query('pageSize') pageSize: number = 5,
+    @Query('page') page: string = '1',
+    @Query('pagesize') pageSize: string = '5',
     @Query('search') search: string,
   ): PaginationResponseDto<CitiesModel> {
-    console.log("findBySearchStringPaginated controller");
-    return this.citiesService.findBySearchStringPaginated(page, pageSize, search);
+    const pageNumber: number = parseInt(page, 10); // Convert to number using parseInt
+    const pageSizeNumber: number = parseInt(pageSize, 10);
+    const res: PaginationResponseDto<CitiesModel> = this.citiesService.findBySearchStringPaginated(
+      pageNumber,
+      pageSizeNumber,
+      search,
+    );
+    if (res === null) {
+      throw new BadRequestException();
+    }
+    return res;
   }
 }

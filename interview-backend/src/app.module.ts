@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { CitiesModule } from './cities/cities.module';
+import { CitiesModule } from 'src/cities/cities.module';
 @Module({
   imports: [CitiesModule],
   controllers: [],

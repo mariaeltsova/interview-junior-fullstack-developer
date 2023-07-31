@@ -2,11 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { CitiesModel } from './cities.interface';
 import * as fs from 'fs';
 import * as path from 'path';
-import { PaginationResponseDto } from 'src/pagination/pagination-response.dto';
+import { PaginationResponseDto } from '../pagination/pagination-response.dto';
+import { type } from 'os';
 
 @Injectable()
 export class CitiesService {
-  private cities: Array<CitiesModel> = [];
+  cities: Array<CitiesModel> = [];
 
   constructor() {
     this.readCitiesFromJson();
@@ -28,17 +29,11 @@ export class CitiesService {
     return this.cities;
   }
 
-  public findOne(uuid: string): CitiesModel {
-    console.log(uuid);
-    const city: CitiesModel = this.cities.find((city) => city.uuid === uuid);
-    return city;
-  }
-
   public findBySearchString(search: string): Array<CitiesModel> {
     const matchingCities: CitiesModel[] = this.cities.filter(
       (city) =>
-        city.uuid.includes(search) ||
-        city.cityName.toLowerCase().includes(search),
+        city.uuid.includes(search.toLowerCase()) ||
+        city.cityName.toLowerCase().includes(search.toLowerCase()),
     );
     return matchingCities;
   }
@@ -66,17 +61,22 @@ export class CitiesService {
   ): PaginationResponseDto<CitiesModel> {
     const matchingCities: CitiesModel[] = this.cities.filter(
       (city) =>
-        city.uuid.includes(search) ||
-        city.cityName.toLowerCase().includes(search),
+        city.uuid.includes(search.toLowerCase()) ||
+        city.cityName.toLowerCase().includes(search.toLowerCase()),
     );
     const startIndex = (page - 1) * pageSize;
     const paginatedData = matchingCities.slice(startIndex, startIndex + pageSize);
     const totalItems = matchingCities.length;
-    return {
-        items: paginatedData,
-        totalItems,
-        currentPage: page,
-        pageSize,
-      };
+    if (startIndex < 0 || startIndex >= totalItems) {
+      return null;
+    }
+    const res:PaginationResponseDto<CitiesModel> = new PaginationResponseDto<CitiesModel> ({
+      items: paginatedData,
+      totalItems,
+      currentPage: page,
+      pageSize,
+    });
+    console.log(res)
+    return res;
   }
 }
