@@ -67,7 +67,7 @@ export class CitiesService {
     const startIndex = (page - 1) * pageSize;
     const paginatedData = matchingCities.slice(startIndex, startIndex + pageSize);
     const totalItems = matchingCities.length;
-    if (startIndex < 0 || startIndex >= totalItems) {
+    if (startIndex < 0 || (startIndex >= totalItems && totalItems !== 0)) {
       return null;
     }
     const res:PaginationResponseDto<CitiesModel> = new PaginationResponseDto<CitiesModel> ({

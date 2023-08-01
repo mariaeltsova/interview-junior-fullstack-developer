@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClientModule } from '@angular/common/http'; 
 import { FormComponent } from './form.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { FormsModule } from '@angular/forms';
 
 describe('FormComponent', () => {
   let component: FormComponent;
@@ -8,7 +10,9 @@ describe('FormComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [FormComponent]
+      declarations: [FormComponent],
+      imports: [HttpClientModule, NgxPaginationModule, FormsModule],
+     
     });
     fixture = TestBed.createComponent(FormComponent);
     component = fixture.componentInstance;

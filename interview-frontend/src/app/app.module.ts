@@ -21,7 +21,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     NgbModalModule,
     NgxPaginationModule,
   ],
-  providers: [],
+  providers: [HttpClientModule,],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
